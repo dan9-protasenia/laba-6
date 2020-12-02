@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <malloc.h>
+int main() {
+int *mas, n, *proverka, kolvo = 0, j1, i1;
+printf("size n*n ");
+scanf_s("%d", &n);
+mas = (int*)malloc(n*n * sizeof(int));
+proverka = (int*)malloc(n*n * sizeof(int));
+//вводим карту
+for (int i = 0; i < n; i++) {
+for (int j = 0; j < n; j++) {
+scanf_s("%d", (mas + i * n + j));
+*(proverka + i * n + j) = 0;
+}
+}
+//путешествие
+for (int i = 0; i < n; i++) {
+for (int j = 0; j < n; j++) {
+if (*(proverka + i * n + j) == 1) {
+continue;
+}
+if (*(mas + i * n + j) == 1 && *(proverka + i * n + j) == 0) {
+j1 = j;
+while (*(mas + i * n + j1) == 1) {
+*(proverka + i * n + j1) = 1;
+j1++;
+}
+i1 = i;
+while (*(mas + i1 * n + j) == 1) {
+*(proverka + i1 * n + j) = 1;
+i1++;
+}
+for (int zx = i; zx < i1; zx++) {
+for (int zc = j; zc < j1; zc++) {
+*(proverka + zx * n + zc) = 1;
+}
+}
+kolvo++;
+}
+*(proverka + i * n + j) = 1;
+}
+}
+//вывод ответа
+printf("%d", kolvo);
+}
